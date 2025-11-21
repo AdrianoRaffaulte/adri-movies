@@ -12,7 +12,7 @@ function Navbar() {
         borderBottom: "2px solid #222",
       }}
     >
-      🎥 AdriMovies
+      AdriMovies
     </nav>
   );
 }
