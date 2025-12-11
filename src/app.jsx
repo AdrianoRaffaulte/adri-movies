@@ -3,7 +3,7 @@ import Home from "./pages/Home";
 import Catalogo from "./pages/Catalogo";
 import Login from "./pages/Login";
 import Favoritos from "./pages/Favoritos";
-import Navbar from "./components/Navbar";
+import Navbar from "./components/navbar";
 
 import PrivateRoute from "./router/PrivateRoute";
 import PublicRoute from "./router/PublicRoute";
