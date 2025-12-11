@@ -5,21 +5,32 @@ import MovieDetail from "./MovieDetail";
 
 export default function MovieGrid() {
   const [inputValue, setInputValue] = useState("");
-  const [search, setSearch] = useState("batman"); // START WITH A REAL TERM
+
+  const [search, setSearch] = useState("batman");
 
   const { data: movies, isLoading, isError } = useMovies(search);
+
   const [selectedMovieId, setSelectedMovieId] = useState(null);
 
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter") {
+      const value = inputValue.trim();
+      setSearch(value === "" ? "batman" : value);
+    }
+  };
+
+  if (isLoading) return <p style={{ color: "white", textAlign: "center" }}>Cargando...</p>;
+  if (isError) return <p style={{ color: "red", textAlign: "center" }}>Error al cargar.</p>;
 
   return (
     <>
-      {/* Barra de búsqueda */}
       <div style={{ textAlign: "center", marginBottom: "20px" }}>
         <input
           type="text"
           placeholder="Buscar películas..."
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
+          value={inputValue}
+          onChange={(e) => setInputValue(e.target.value)}
+          onKeyDown={handleKeyDown}
           style={{
             padding: "10px",
             width: "300px",
@@ -33,7 +44,6 @@ export default function MovieGrid() {
         />
       </div>
 
-      {/* Lista de películas */}
       <div
         style={{
           display: "flex",
@@ -53,7 +63,6 @@ export default function MovieGrid() {
         )}
       </div>
 
-      {/* Modal de detalles */}
       {selectedMovieId && (
         <MovieDetail
           movieId={selectedMovieId}

@@ -1,16 +1,42 @@
-import Navbar from "./components/navbar";
-import Container from "./components/Container";
-import MovieGrid from "./components/MovieGrid";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Home from "./pages/Home";
+import Catalogo from "./pages/Catalogo";
+import Login from "./pages/Login";
+import Favoritos from "./pages/Favoritos";
+import Navbar from "./components/Navbar";
 
-function App() {
+import PrivateRoute from "./router/PrivateRoute";
+import PublicRoute from "./router/PublicRoute";
+
+export default function App() {
   return (
-    <>
+    <BrowserRouter>
       <Navbar />
-      <Container>
-        <MovieGrid />
-      </Container>
-    </>
+
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/catalogo" element={<Catalogo />} />
+
+        {/*publica*/}
+        <Route
+          path="/login"
+          element={
+            <PublicRoute>
+              <Login />
+            </PublicRoute>
+          }
+        />
+
+        {/*privada */}
+        <Route
+          path="/favoritos"
+          element={
+            <PrivateRoute>
+              <Favoritos />
+            </PrivateRoute>
+          }
+        />
+      </Routes>
+    </BrowserRouter>
   );
 }
-
-export default App;
