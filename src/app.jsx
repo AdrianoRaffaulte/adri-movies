@@ -1,15 +1,42 @@
-import React from "react";
-import ReactDOM from "react-dom/client";
-import App from "./app";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { AuthProvider } from "./context/AuthContext";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Home from "./pages/Home";
+import Catalogo from "./pages/Catalogo";
+import Login from "./pages/Login";
+import Favoritos from "./pages/Favoritos";
+import Navbar from "./components/Navbar";
 
-const queryClient = new QueryClient();
+import PrivateRoute from "./router/PrivateRoute";
+import PublicRoute from "./router/PublicRoute";
 
-ReactDOM.createRoot(document.getElementById("root")).render(
-  <QueryClientProvider client={queryClient}>
-    <AuthProvider>
-      <App />
-    </AuthProvider>
-  </QueryClientProvider>
-);
+export default function App() {
+  return (
+    <BrowserRouter>
+      <Navbar />
+
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/catalogo" element={<Catalogo />} />
+
+        {/*publica*/}
+        <Route
+          path="/login"
+          element={
+            <PublicRoute>
+              <Login />
+            </PublicRoute>
+          }
+        />
+
+        {/*privada */}
+        <Route
+          path="/favoritos"
+          element={
+            <PrivateRoute>
+              <Favoritos />
+            </PrivateRoute>
+          }
+        />
+      </Routes>
+    </BrowserRouter>
+  );
+}
